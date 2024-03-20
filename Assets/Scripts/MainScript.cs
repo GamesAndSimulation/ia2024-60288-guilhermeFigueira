@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
- 
+using UnityEngine.AI;
+
 public class MainScript : MonoBehaviour
 {
     public int bullets = 20;
@@ -30,12 +31,14 @@ public class MainScript : MonoBehaviour
     public float mouseSpeed = 100;
     public float gravity = 9.8f;
     public float jumpForce = 20;
-    public float dashForce = 300;
+    public float dashForce = 750;
     public int maxDashes = 3;
     private int currentDashes;
     private float dashRecoverTime = 1.0f;
     private float dashRecoverTimeElapsed = 0.0f;
     [SerializeField] private GameObject[] _dashIcons;
+    [SerializeField] private bool noclip = false;
+    private float startFOV;
     
     [Header("Camera Settings")]
     private float pitch = 0.0f;
@@ -58,6 +61,8 @@ public class MainScript : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        startFOV = Camera.main.fieldOfView;
+
         currentDashes = maxDashes;
  
     }
@@ -72,16 +77,15 @@ public class MainScript : MonoBehaviour
         float verticalMouseValue = Input.GetAxis("Mouse Y");
  
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        if(isGrounded && velocity.y < 0)
-            velocity.y = -2f;
+        if(isGrounded && velocity.y < 0){
+            velocity.y = 0f;
+        }
  
         //two ways of jumping
 
-        if(currentDashes < maxDashes)
-            dashRecoverTimeElapsed += Time.deltaTime;
-
         if(currentDashes < maxDashes){
-            if(dashRecoverTimeElapsed >= dashRecoverTime){
+            dashRecoverTimeElapsed += Time.deltaTime;
+            if(dashRecoverTimeElapsed >= dashRecoverTime && isGrounded){
                 currentDashes++;
                 _dashIcons[currentDashes - 1].SetActive(true);
                 dashRecoverTimeElapsed = 0.0f;
@@ -97,11 +101,19 @@ public class MainScript : MonoBehaviour
         }
         
         //transform.position += transform.forward * verticalValue* moveSpeed * Time.deltaTime + transform.right * horizontalValue* moveSpeed * Time.deltaTime;
-        Vector3 moveDirection = transform.forward * verticalValue + transform.right * horizontalValue;
-        characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
+        if(!noclip){
+            Vector3 moveDirection = transform.forward * verticalValue + transform.right * horizontalValue;
+            characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
+        }
+        else{
+            characterController.Move(transform.forward * dashForce * Time.deltaTime);
+        }
  
-        velocity.y -= gravity * Time.deltaTime;
-        characterController.Move(velocity * Time.deltaTime);
+        if(!isGrounded){
+            velocity.y -= gravity * Time.deltaTime;
+        }
+        if(!noclip)
+            characterController.Move(velocity * Time.deltaTime);
  
         //naive version - does not depend on time, doesnt use the correct mouse position
  
@@ -125,8 +137,8 @@ public class MainScript : MonoBehaviour
                 AudioManager.Instance.PlaySound(gunShotSound);
                 GameObject instantiatedBullet =
                     Instantiate(projectile, transform.position + transform.forward, transform.rotation);
+                instantiatedBullet.tag = "PlayerProjectile";
                 instantiatedBullet.GetComponent<Rigidbody>().AddForce(transform.forward * fireforce);
- 
                 Destroy(instantiatedBullet, 5);
                 bullets--;
             }
@@ -145,6 +157,10 @@ public class MainScript : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.V)){
             enemySpawner.SpawnEnemies(15);
         }
+        // Press 1
+        if(Input.GetKeyDown(KeyCode.Alpha1)){
+            noclip = !noclip;
+        }
     }
 
     public void SetJetpackForce(){
@@ -152,19 +168,10 @@ public class MainScript : MonoBehaviour
     }
  
     IEnumerator Dash(){
-        float dashDuration = 0.2f; // Duration of the dash in seconds. Adjust this value as needed.
-        float startFOV = Camera.main.fieldOfView;
-        float dashFOV = startFOV + 10;
-        float lerpTime = 0.07f; 
+        float dashDuration = 0.4f; // Duration of the dash in seconds. Adjust this value as needed.
+        transform.position += transform.forward * 3.0f; // Initial teleport
 
         float startTime = Time.time;
-        while(Time.time - startTime < lerpTime){
-            Camera.main.fieldOfView = Mathf.Lerp(startFOV, dashFOV, (Time.time - startTime) / lerpTime);
-            yield return null;
-        }
-
-        Camera.main.fieldOfView = dashFOV;
-
         while (dashDuration > 0)
         {
             //if(Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0){
@@ -177,12 +184,6 @@ public class MainScript : MonoBehaviour
             dashDuration -= Time.deltaTime; // Decrease the remaining dash duration
             yield return null; // Wait for the next frame
         }
-        startTime = Time.time;
-        while(Time.time - startTime < lerpTime){
-            Camera.main.fieldOfView = Mathf.Lerp(dashFOV, startFOV, (Time.time - startTime) / lerpTime);
-            yield return null;
-        }
-        Camera.main.fieldOfView = 60;
     }
  
     IEnumerator Jump(){

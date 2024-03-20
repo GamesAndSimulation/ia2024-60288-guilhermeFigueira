@@ -40,6 +40,7 @@ public class TargetBehaviour : MonoBehaviour
         fireDirection.Normalize();
         GameObject instantiatedBullet =
             Instantiate(projectile, transform.position + fireDirection, transform.rotation);
+        instantiatedBullet.tag = "EnemyProjectile";
         instantiatedBullet.GetComponent<Rigidbody>().AddForce(fireDirection * fireforce);
         Destroy(instantiatedBullet, 5);
     }
@@ -53,7 +54,8 @@ public class TargetBehaviour : MonoBehaviour
  
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Projectile" && !isDying)
+        Debug.Log($"Collision with {collision.gameObject.tag}");
+        if (collision.gameObject.tag == "PlayerProjectile" && !isDying)
         {
             if(heath > 0){
                 Debug.Log("Hit!!");

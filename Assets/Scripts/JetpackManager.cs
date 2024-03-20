@@ -9,7 +9,7 @@ public class JetpackManager : MonoBehaviour
     [SerializeField] private ParticleSystem jetpackSmoke;
     [SerializeField] private AudioClip jetpackSound;
     [SerializeField] private TextMeshProUGUI fuelText;
-    [SerializeField] private float fullFuel = 2.0f; 
+    [SerializeField] private float fullFuel = 2.0f;
     private float fuel;
     private MainScript player;
 
