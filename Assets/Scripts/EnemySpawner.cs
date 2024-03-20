@@ -16,7 +16,7 @@ public class EnemySpawner : MonoBehaviour
     {
         for (int i = 0; i < amount; i++)
         {
-            Vector3 spawnPosition = new Vector3(Random.Range(-50, 50), 0.945f, Random.Range(-50, 50));
+            Vector3 spawnPosition = new Vector3(Random.Range(-50, 50), 0f, Random.Range(-50, 50));
             Instantiate(_enemyPrefab, spawnPosition, Quaternion.identity);
         }
     }
