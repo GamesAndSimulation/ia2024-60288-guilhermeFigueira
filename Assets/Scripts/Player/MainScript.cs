@@ -38,7 +38,6 @@ public class MainScript : MonoBehaviour
     private int currentDashes;
     private float dashRecoverTime = 1.0f;
     private float dashRecoverTimeElapsed = 0.0f;
-    private float startFOV;
     
     [Header("Camera Settings")]
     private float pitch = 0.0f;
@@ -51,17 +50,13 @@ public class MainScript : MonoBehaviour
     public EnemySpawner enemySpawner;
     Rigidbody rb;
  
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        //characterController = GetComponent<CharacterController>();
  
         /* Comment to unlock the mouse cursor */
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
-        startFOV = Camera.main.fieldOfView;
 
         currentDashes = maxDashes;
  
@@ -145,6 +140,7 @@ public class MainScript : MonoBehaviour
         // Reload
         if(Input.GetKeyDown(KeyCode.R)){
             if(bullets < 30){
+                gunAnimator.SetTrigger("Reload");
                 AudioManager.Instance.PlaySound(reloadSound);
                 bullets = 30; 
             }

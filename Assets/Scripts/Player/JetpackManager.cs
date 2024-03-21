@@ -9,31 +9,33 @@ public class JetpackManager : MonoBehaviour
     [SerializeField] private ParticleSystem jetpackSmoke;
     [SerializeField] private AudioClip jetpackSound;
     [SerializeField] private TextMeshProUGUI fuelText;
-    [SerializeField] private float fullFuel = 2.0f;
+    public float fullFuel = 2.0f;
+    public float flyForce = 0.2f;
     private float fuel;
-    private MainScript player;
+    private PlayerScript player;
+    private bool usingJetpack;
 
     void Start(){
-        player = GameObject.FindWithTag("Player").GetComponent<MainScript>();
+        player = GameObject.FindWithTag("Player").GetComponent<PlayerScript>();
         fuel = fullFuel;
         fuelText.text = $"{fuel.ToString("F1")} / {fullFuel.ToString("F1")}";
+        usingJetpack = false;
     }
 
     void Update(){
-        if(Input.GetButtonDown("Jump")){
+        if(Input.GetButtonDown("Jump") && !player.grounded && !usingJetpack){
             jetpackSmoke.Play();
             AudioManager.Instance.PlaySoundLooping(jetpackSound);
+            usingJetpack = true;
         }
 
-        if(Input.GetButton("Jump"))
+        if(usingJetpack)
         {
             if(fuel > 0)
             {
-                fuel -= Time.deltaTime;
+                fuel -= Time.deltaTime * 0.8f;
                 fuelText.text = $"{fuel.ToString("F1")} / {fullFuel.ToString("F1")}";
-                StartCoroutine(player.Jump());
-                //player.SetJetpackForce();
-                // Add force to the player
+                player.UpwardsForce(flyForce);
             }
             else
             {
@@ -43,10 +45,11 @@ public class JetpackManager : MonoBehaviour
         }
  
         if(Input.GetButtonUp("Jump")) {
+            usingJetpack = false;
             jetpackSmoke.Stop();
             AudioManager.Instance.StopSoundLooping();
         }
-        if(player.isGrounded){
+        if(player.grounded){
             fuel = fullFuel;
             fuelText.text = $"{fuel.ToString("F1")} / {fullFuel.ToString("F1")}";
         }
