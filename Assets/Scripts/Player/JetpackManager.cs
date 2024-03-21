@@ -13,7 +13,7 @@ public class JetpackManager : MonoBehaviour
     public float flyForce = 0.2f;
     private float fuel;
     private PlayerScript player;
-    private bool usingJetpack;
+    public bool usingJetpack { get; private set; } = false;
 
     void Start(){
         player = GameObject.FindWithTag("Player").GetComponent<PlayerScript>();

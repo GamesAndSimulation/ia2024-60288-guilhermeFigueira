@@ -135,9 +135,6 @@ public class PlayerScript : MonoBehaviour
         currentRoll = Mathf.MoveTowards(currentRoll, 0, Time.deltaTime * rollSpeed);
     }
 
-    // Applying the calculated roll to the camera's Z-axis
-    //Camera.main.transform.localEulerAngles = new Vector3(Camera.main.transform.localEulerAngles.x, Camera.main.transform.localEulerAngles.y, currentRoll);
-
     // Vertical jumping tilt
     if (!grounded)
     {
@@ -331,6 +328,8 @@ public class PlayerScript : MonoBehaviour
         keepMomentum = false;
     }
 
+    public JetpackManager jetpackManager;
+
     private void MovePlayer()
     {
         if (state == MovementState.dashing) return;
@@ -338,12 +337,15 @@ public class PlayerScript : MonoBehaviour
         // calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
-        if (grounded)
+        if (grounded){
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-
-        // in air
-        else if (!grounded)
+        }
+        else if (!grounded){
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+            //if(!jetpackManager.usingJetpack){
+            //    rb.AddForce(Vector3.down * 10f, ForceMode.Force);
+            //}
+        }
     }
 
     private void SpeedControl()
