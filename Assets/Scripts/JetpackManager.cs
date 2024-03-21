@@ -31,7 +31,8 @@ public class JetpackManager : MonoBehaviour
             {
                 fuel -= Time.deltaTime;
                 fuelText.text = $"{fuel.ToString("F1")} / {fullFuel.ToString("F1")}";
-                player.SetJetpackForce();
+                StartCoroutine(player.Jump());
+                //player.SetJetpackForce();
                 // Add force to the player
             }
             else

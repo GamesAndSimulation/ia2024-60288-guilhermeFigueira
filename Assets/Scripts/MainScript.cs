@@ -6,13 +6,13 @@ using UnityEngine.AI;
 public class MainScript : MonoBehaviour
 {
     public int bullets = 20;
-    public GameObject myTree;
  
+    [Header("Gun")]
     public GameObject projectile;
     public float fireforce = 1000; 
  
+    [Header("Jetpack")]
     public ParticleSystem jetpackSmoke;
-
  
     [Header("Audio")]
     public AudioClip jetpackSound;
@@ -27,6 +27,8 @@ public class MainScript : MonoBehaviour
     public bool isGrounded {get; private set;} 
  
     [Header("Movement Settings")]
+    [SerializeField] private GameObject[] _dashIcons;
+    [SerializeField] private bool noclip = false;
     public float moveSpeed = 8;
     public float mouseSpeed = 100;
     public float gravity = 9.8f;
@@ -36,8 +38,6 @@ public class MainScript : MonoBehaviour
     private int currentDashes;
     private float dashRecoverTime = 1.0f;
     private float dashRecoverTimeElapsed = 0.0f;
-    [SerializeField] private GameObject[] _dashIcons;
-    [SerializeField] private bool noclip = false;
     private float startFOV;
     
     [Header("Camera Settings")]
@@ -70,6 +70,18 @@ public class MainScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        HandleMovementOld();
+        HandleInputs();
+    }
+
+    /// <summary>
+    /// pre: Requires a ridgid body component in player
+    /// </summary>
+    void HandleMovementRB(){
+        
+    }
+
+    void HandleMovementOld(){
         float horizontalValue = Input.GetAxis("Horizontal");
         float verticalValue = Input.GetAxis("Vertical");
  
@@ -81,8 +93,6 @@ public class MainScript : MonoBehaviour
             velocity.y = 0f;
         }
  
-        //two ways of jumping
-
         if(currentDashes < maxDashes){
             dashRecoverTimeElapsed += Time.deltaTime;
             if(dashRecoverTimeElapsed >= dashRecoverTime && isGrounded){
@@ -91,16 +101,7 @@ public class MainScript : MonoBehaviour
                 dashRecoverTimeElapsed = 0.0f;
             }
         }
- 
-        // Reload
-        if(Input.GetKeyDown(KeyCode.R)){
-            if(bullets < 30){
-                AudioManager.Instance.PlaySound(reloadSound);
-                bullets = 30; 
-            }
-        }
         
-        //transform.position += transform.forward * verticalValue* moveSpeed * Time.deltaTime + transform.right * horizontalValue* moveSpeed * Time.deltaTime;
         if(!noclip){
             Vector3 moveDirection = transform.forward * verticalValue + transform.right * horizontalValue;
             characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
@@ -115,18 +116,15 @@ public class MainScript : MonoBehaviour
         if(!noclip)
             characterController.Move(velocity * Time.deltaTime);
  
-        //naive version - does not depend on time, doesnt use the correct mouse position
- 
         yaw += horizontalMouseValue * mouseSpeed * Time.deltaTime;
         pitch -= verticalMouseValue * mouseSpeed * Time.deltaTime;
  
         pitch = Mathf.Clamp(pitch, -90, 90);
  
         transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
- 
-        //transform.eulerAngles += new Vector3(-verticalMouseValue * mouseSpeed * Time.deltaTime, horizontalMouseValue * mouseSpeed * Time.deltaTime, 0);
- 
- 
+    }
+
+    void HandleInputs(){
         if (Input.GetButtonUp("Fire1")){
         
             if(bullets <= 0){
@@ -143,6 +141,15 @@ public class MainScript : MonoBehaviour
                 bullets--;
             }
         }
+
+        // Reload
+        if(Input.GetKeyDown(KeyCode.R)){
+            if(bullets < 30){
+                AudioManager.Instance.PlaySound(reloadSound);
+                bullets = 30; 
+            }
+        }
+
         if(Input.GetKeyDown(KeyCode.LeftShift)){
             Debug.Log("Dash");
             // If moving dash in the direction of the movement, otherwise dash in the direction of the camera
@@ -163,45 +170,21 @@ public class MainScript : MonoBehaviour
         }
     }
 
-    public void SetJetpackForce(){
-        velocity.y = jumpForce;
-    }
- 
     IEnumerator Dash(){
-        float dashDuration = 0.4f; // Duration of the dash in seconds. Adjust this value as needed.
-        transform.position += transform.forward * 3.0f; // Initial teleport
+        float dashDuration = 0.4f; 
+        transform.position += transform.forward * 3.0f;
 
         float startTime = Time.time;
         while (dashDuration > 0)
         {
-            //if(Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0){
-            //    characterController.Move(moveDirection * dashForce * Time.deltaTime);
-            //}
-            //else{
             characterController.Move(transform.forward * dashForce * Time.deltaTime);
-            //}
- 
-            dashDuration -= Time.deltaTime; // Decrease the remaining dash duration
-            yield return null; // Wait for the next frame
+            dashDuration -= Time.deltaTime; 
+            yield return null; 
         }
     }
  
-    IEnumerator Jump(){
-        //rb.AddForce(new Vector3(0, jumpForce, 0));
+    public IEnumerator Jump(){
         velocity.y = jumpForce;
         yield return null;
     }
- 
-    // void OnGUI()
-    // {
-    //     if (GUI.Button(new Rect(10, 10, 100, 40), "Add bullets"))
-    //     {
-    //         Debug.Log("Add 10 bullets");
-    //         bullets += 10+1;  //plus the one that is fired
-    //     }
- 
-    //     GUI.contentColor = Color.red;
-    //     GUI.skin.label.fontSize = 50;
-    //     GUI.Label(new Rect(10, 50, 400, 100), "bullets " + bullets);
-    // }
 }
