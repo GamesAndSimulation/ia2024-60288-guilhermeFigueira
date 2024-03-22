@@ -86,6 +86,7 @@ public class PlayerScript : MonoBehaviour
     public float tiltAmount = 5.0f;
     public float currentTilt {get; private set;}
     public float currentRoll {get; private set;}
+    public bool otherside = false;
 
  
     // Start is called before the first frame update
@@ -125,7 +126,8 @@ public class PlayerScript : MonoBehaviour
 {
     // Horizontal movement tilt
     float horizontalInput = Input.GetAxisRaw("Horizontal");
-    float rollThisFrame = horizontalInput * rollSpeed * Time.deltaTime;
+    int direction = otherside ? -1 : 1;
+    float rollThisFrame = direction * horizontalInput * rollSpeed * Time.deltaTime;
     currentRoll = Mathf.Clamp(currentRoll + rollThisFrame, -maxRoll, maxRoll);
     
     // Returning the camera to neutral position when there's no horizontal input
@@ -186,6 +188,16 @@ public class PlayerScript : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
+        if (!grounded && !jetpackManager.usingJetpack)
+        {
+            ApplyAdditionalGravityForce();
+        }
+    }
+
+    void ApplyAdditionalGravityForce(){
+        float additionalGravityForce = 9.81f;
+        float additionalGravityFactor = 2f;
+        rb.AddForce(Vector3.down * additionalGravityForce * additionalGravityFactor, ForceMode.Acceleration);
     }
 
     void HandleInputs(){

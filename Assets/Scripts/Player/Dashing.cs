@@ -28,6 +28,10 @@ public class Dashing : MonoBehaviour
     public float dashCooldown;
     private float dashCooldownTimer;
 
+    [Header("Regen")]
+    public float dashRegen;
+    private float dashRegenTimer;
+
     [Header("Input")]
     public KeyCode dashKey = KeyCode.LeftShift;
 
@@ -46,6 +50,21 @@ public class Dashing : MonoBehaviour
         }
         if(dashCooldownTimer > 0)
             dashCooldownTimer -= Time.deltaTime;
+        if(dashRegenTimer > 0){
+            dashRegenTimer -= Time.deltaTime;
+        }
+        else{
+            if(dashesCount < 2){
+                dashRegenTimer = dashRegen;
+                dashesCount++;
+                Debug.Log($"Dashes: {dashesCount}");
+            }
+            else if(dashesCount == 2){
+                dashesCount++;
+                Debug.Log($"Dashes: {dashesCount}");
+            }
+        }
+
     }
 
     private void Dash()
@@ -59,6 +78,8 @@ public class Dashing : MonoBehaviour
             dashCooldownTimer = dashCooldown;
 
         dashesCount--;
+        Debug.Log("Dashes: " + dashesCount);
+        dashRegenTimer = dashRegen;
         playerScript.dashing = true;
         cam.DoFov(dashFov);
 
