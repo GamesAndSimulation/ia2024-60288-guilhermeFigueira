@@ -17,6 +17,7 @@ public class Dashing : MonoBehaviour
     public float dashSpeed;
     public float dashUpwardForce;
     public float dashDuration;
+    public int dashesCount;
 
     [Header("CameraEffects")]
     public PlayerCam cam;
@@ -49,11 +50,15 @@ public class Dashing : MonoBehaviour
 
     private void Dash()
     {
+        if(dashesCount <= 0)
+            return;
+
         if(dashCooldownTimer > 0)
             return;
         else
             dashCooldownTimer = dashCooldown;
 
+        dashesCount--;
         playerScript.dashing = true;
         cam.DoFov(dashFov);
 
