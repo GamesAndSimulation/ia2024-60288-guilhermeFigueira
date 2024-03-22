@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 3987931314373161340, guid: df5cf27de05e5234f82ed8d770f52dff, type: 3}
-  fireforce: 500
+  fireforce: 10
   speedRange: 0.01
   directionTime: 5
   heath: 30

@@ -12812,6 +12812,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 991204083}
     - target: {fileID: 6701629011594054134, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
+      propertyPath: fireforce
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6701629011594054134, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
       propertyPath: gunAnimator
       value: 
       objectReference: {fileID: 1183771160}
