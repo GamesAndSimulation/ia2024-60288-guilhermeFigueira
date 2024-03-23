@@ -9,6 +9,11 @@ public class RainFollow : MonoBehaviour
     Vector3 currentPlayerPos;
     private Vector3 velocity = Vector3.zero;
 
+    void Start()
+    {
+        transform.position = new Vector3(player.position.x, player.position.y + 9f, player.position.z);
+    }
+
     void Update()
     {
         Vector3 targetPosition = new Vector3(player.position.x, player.position.y + 9f, player.position.z);

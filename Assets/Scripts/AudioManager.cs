@@ -21,14 +21,15 @@ public class AudioManager : MonoBehaviour
     }
  
     private void Awake()
-    {
+    { 
         instance = this;
     }
  
-    public void PlaySound(AudioClip clipToPlay, bool randomPitch = false)
+    public void PlaySound(AudioClip clipToPlay, bool randomPitch = false, float volume = 0.4f)
     {
         audioSources.Add(this.AddComponent<AudioSource>());
         var audio = audioSources[audioSources.Count - 1];
+        audio.volume = volume;
         audio.clip = clipToPlay;
         if(randomPitch)
         {

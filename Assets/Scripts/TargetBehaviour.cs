@@ -69,6 +69,23 @@ public class TargetBehaviour : MonoBehaviour
             }
         }
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "PlayerProjectile" && !isDying)
+        {
+            if(heath > 0){
+                heath -= 10;
+                StartCoroutine(Squish());
+                if (heath <= 0)
+                {
+                    AudioManager.Instance.PlaySound(_DieSound, true);
+                    Destroy(gameObject);
+                    isDying = true;
+                }
+            }
+        }
+    }
  
     IEnumerator Squish()
     {

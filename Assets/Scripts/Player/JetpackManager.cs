@@ -8,11 +8,12 @@ public class JetpackManager : MonoBehaviour
 
     [SerializeField] private ParticleSystem jetpackSmoke;
     [SerializeField] private AudioClip jetpackSound;
-    [SerializeField] private TextMeshProUGUI fuelText;
+    public TextMeshProUGUI fuelText;
     public float fullFuel = 2.0f;
     public float flyForce = 0.2f;
-    private float fuel;
+    public float fuel;
     private PlayerScript player;
+    [SerializeField] private Rigidbody playerRB;
     public bool usingJetpack { get; private set; } = false;
 
     void Start(){
@@ -26,6 +27,8 @@ public class JetpackManager : MonoBehaviour
         if(Input.GetButtonDown("Jump") && !player.grounded && !usingJetpack){
             jetpackSmoke.Play();
             AudioManager.Instance.PlaySoundLooping(jetpackSound);
+            if(fuel > 0)
+                playerRB.velocity = new Vector3(playerRB.velocity.x, 0, playerRB.velocity.z);
             usingJetpack = true;
         }
 

@@ -23,7 +23,9 @@ public class Collectable : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            jetpackManager.fullFuel = 1.2f;
+            jetpackManager.fullFuel *= 1.3f;
+            jetpackManager.fuel = jetpackManager.fullFuel;
+            jetpackManager.fuelText.text = $"{jetpackManager.fuel.ToString("F1")} / {jetpackManager.fullFuel.ToString("F1")}";
             Destroy(gameObject);
         }
     }

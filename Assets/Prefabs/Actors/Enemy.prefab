@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7092251934911765047}
   - component: {fileID: 5941785805664320338}
   - component: {fileID: 1230367612198300516}
-  - component: {fileID: 7854479548517945233}
   - component: {fileID: 5784343625923952134}
   - component: {fileID: 1579344476643501716}
   - component: {fileID: 8201307305787012930}
@@ -110,27 +109,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!135 &7854479548517945233
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6710159362623928843}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.33018178
-  m_Center: {x: 0.010181711, y: 0, z: -6.334167e-10}
 --- !u!114 &5784343625923952134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,8 +147,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.41459343
-  m_Center: {x: 0.0068351184, y: 0, z: -0.031956386}
+  m_Radius: 0.46298507
+  m_Center: {x: -0.041556533, y: 0, z: -0.031956382}
 --- !u!82 &8201307305787012930
 AudioSource:
   m_ObjectHideFlags: 0

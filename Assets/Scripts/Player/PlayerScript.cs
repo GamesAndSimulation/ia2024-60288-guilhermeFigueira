@@ -25,6 +25,7 @@ public class PlayerScript : MonoBehaviour
     private float moveSpeed;
     public float walkSpeed;
     public float sprintSpeed;
+    private float initialWalkSpeed;
 
     public float maxYSpeed;
     
@@ -95,6 +96,7 @@ public class PlayerScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         readyToJump = true;
+        initialWalkSpeed = walkSpeed;
         //characterController = GetComponent<CharacterController>();
  
         /* Comment to unlock the mouse cursor */
@@ -207,6 +209,8 @@ public class PlayerScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space))
         {
+            walkSpeed = Mathf.Clamp(walkSpeed + 0.1f, initialWalkSpeed, sprintSpeed);
+            Debug.Log(walkSpeed);
             if(readyToJump && grounded){
 
                 readyToJump = false;
@@ -216,23 +220,26 @@ public class PlayerScript : MonoBehaviour
                 Invoke(nameof(ResetJump), jumpCooldown);
             }
         }
-
-        if (Input.GetButtonUp("Fire1")){
-        
-            if(bullets <= 0){
-                AudioManager.Instance.PlaySound(emptuGunShotSound);
-            }
-            else{
-                gunAnimator.SetTrigger("Shoot");
-                AudioManager.Instance.PlaySound(gunShotSound);
-                GameObject instantiatedBullet =
-                    Instantiate(projectile, Camera.main.transform.position + Camera.main.transform.forward, Camera.main.transform.rotation);
-                instantiatedBullet.tag = "PlayerProjectile";
-                instantiatedBullet.GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * fireforce);
-                Destroy(instantiatedBullet, 5);
-                bullets--;
-            }
+        if(Input.GetKeyUp(KeyCode.Space)){
+            walkSpeed = initialWalkSpeed;
         }
+        if (Input.GetButtonUp("Fire1")){
+
+                    if(bullets <= 0){
+                        AudioManager.Instance.PlaySound(emptuGunShotSound);
+                    }
+                    else{
+                        gunAnimator.SetTrigger("Shoot");
+                        AudioManager.Instance.PlaySound(gunShotSound);
+                        GameObject instantiatedBullet =
+                            Instantiate(projectile, Camera.main.transform.position + Camera.main.transform.forward, Camera.main.transform.rotation);
+                        instantiatedBullet.tag = "PlayerProjectile";
+                        instantiatedBullet.GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * fireforce);
+                        Destroy(instantiatedBullet, 5);
+                        bullets--;
+                    }
+                }
+
 
         // Reload
         if(Input.GetKeyDown(KeyCode.R)){
@@ -385,6 +392,7 @@ public class PlayerScript : MonoBehaviour
     }
 
     public void UpwardsForce(float force){
+
         rb.AddForce(transform.up * force , ForceMode.Impulse);
     }
 
