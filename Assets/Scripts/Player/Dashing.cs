@@ -96,7 +96,6 @@ public class Dashing : MonoBehaviour
     private void DelayedDashForce()
     {
         rb.AddForce(delayedForceToApply, ForceMode.Impulse);
-        rb.AddForce(delayedForceToApply, ForceMode.Impulse);
     }
 
     private void ResetDash()

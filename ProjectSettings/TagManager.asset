@@ -6,6 +6,7 @@ TagManager:
   tags:
   - EnemyProjectile
   - PlayerProjectile
+  - TeleportSpot
   layers:
   - Default
   - TransparentFX
