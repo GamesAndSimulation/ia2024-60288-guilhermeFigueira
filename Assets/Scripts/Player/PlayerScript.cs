@@ -1,12 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using TMPro.EditorUtilities;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering.PostProcessing;
 
 public class PlayerScript : MonoBehaviour
 {
     public int bullets = 20;
+    public float health = 100;
+
+    [Header("References")]
+    public GameObject deathScreen;
+    public PostProcessVolume _volume;
+    Vignette _vignette;
+    public float bloodIntensity = 0;
  
     [Header("Gun")]
     public GameObject projectile;
@@ -98,6 +108,15 @@ public class PlayerScript : MonoBehaviour
         readyToJump = true;
         initialWalkSpeed = walkSpeed;
         //characterController = GetComponent<CharacterController>();
+ 
+        _volume.profile.TryGetSettings<Vignette>(out _vignette);
+
+        if(!_vignette){
+            Debug.LogError("No vignette found");
+        }
+        else{
+            _vignette.enabled.Override(false);
+        }
  
         /* Comment to unlock the mouse cursor */
         Cursor.lockState = CursorLockMode.Locked;
@@ -400,5 +419,39 @@ public class PlayerScript : MonoBehaviour
     {
         readyToJump = true;
     }
+
+    public void Damage(int damage)
+    {
+        health -= damage;
+        StartCoroutine(DamageEffect());
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    private IEnumerator DamageEffect(){
+        bloodIntensity = .4f;
+        _vignette.enabled.Override(true);
+        _vignette.intensity.Override(bloodIntensity);
+
+        yield return new WaitForSeconds(0.4f);
+
+        while (bloodIntensity > 0)
+        {
+            bloodIntensity -= Time.deltaTime;
+            _vignette.intensity.Override(bloodIntensity);
+            yield return null;
+        }
+
+        _vignette.enabled.Override(false);
+        yield break;
+    }
+
+    private void Die()
+    {
+        deathScreen.SetActive(true);
+        Destroy(gameObject);
+    }   
 
 }

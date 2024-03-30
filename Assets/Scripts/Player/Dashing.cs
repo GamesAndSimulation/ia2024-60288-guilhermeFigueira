@@ -12,6 +12,7 @@ public class Dashing : MonoBehaviour
     public Transform playerCam;
     private Rigidbody rb;
     private PlayerScript playerScript;
+    public GameObject[] dashIcons;
 
     [Header("Dashing")]
     public float dashSpeed;
@@ -57,10 +58,12 @@ public class Dashing : MonoBehaviour
             if(dashesCount < 2){
                 dashRegenTimer = dashRegen;
                 dashesCount++;
+                dashIcons[dashesCount-1].SetActive(true);
                 Debug.Log($"Dashes: {dashesCount}");
             }
             else if(dashesCount == 2){
                 dashesCount++;
+                dashIcons[dashesCount-1].SetActive(true);
                 Debug.Log($"Dashes: {dashesCount}");
             }
         }
@@ -78,6 +81,7 @@ public class Dashing : MonoBehaviour
             dashCooldownTimer = dashCooldown;
 
         dashesCount--;
+        dashIcons[dashesCount].SetActive(false);
         Debug.Log("Dashes: " + dashesCount);
         dashRegenTimer = dashRegen;
         playerScript.dashing = true;
