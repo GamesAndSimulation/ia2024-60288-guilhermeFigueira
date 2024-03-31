@@ -38,7 +38,10 @@ public class JetpackManager : MonoBehaviour
             {
                 fuel -= Time.deltaTime * 0.8f;
                 fuelText.text = $"{fuel.ToString("F1")} / {fullFuel.ToString("F1")}";
-                player.UpwardsForce(flyForce);
+                float jetpackVelocityY = 5f;
+                playerRB.velocity = new Vector3(playerRB.velocity.x, jetpackVelocityY, playerRB.velocity.z);
+                //playerRB.AddForce(Vector3.up * flyForce, ForceMode.Force);
+                //player.UpwardsForce(flyForce);
             }
             else
             {

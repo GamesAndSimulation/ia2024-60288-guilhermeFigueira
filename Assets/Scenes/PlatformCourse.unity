@@ -14802,7 +14802,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4756354470769091808, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
       propertyPath: dashSpeed
-      value: 200
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4756354470769091808, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
       propertyPath: playerCam
@@ -14811,6 +14811,10 @@ PrefabInstance:
     - target: {fileID: 4756354470769091808, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
       propertyPath: dashesCount
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756354470769091808, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
+      propertyPath: dashDuration
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4756354470769091808, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
       propertyPath: dashIcons.Array.size
@@ -14841,6 +14845,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1522078041}
     - target: {fileID: 6701629011594054134, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
+      propertyPath: bullets
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6701629011594054134, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
       propertyPath: dashSpeed
       value: 30
       objectReference: {fileID: 0}
@@ -14858,7 +14866,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6701629011594054134, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
       propertyPath: walkSpeed
-      value: 23
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6701629011594054134, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
       propertyPath: projectile
@@ -14874,7 +14882,7 @@ PrefabInstance:
       objectReference: {fileID: 1183771160}
     - target: {fileID: 6701629011594054134, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
       propertyPath: sprintSpeed
-      value: 40
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6701629011594054134, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
       propertyPath: enemySpawner
@@ -14882,7 +14890,7 @@ PrefabInstance:
       objectReference: {fileID: 31591753}
     - target: {fileID: 6714566845352131327, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
       propertyPath: flyForce
-      value: 0.2
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6714566845352131327, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
       propertyPath: fuelText

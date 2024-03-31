@@ -9901,6 +9901,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullets: 30
+  health: 100
+  deathScreen: {fileID: 0}
+  _volume: {fileID: 0}
+  bloodIntensity: 0
   projectile: {fileID: 3987931314373161340, guid: df5cf27de05e5234f82ed8d770f52dff, type: 3}
   fireforce: 1000
   jetpackSmoke: {fileID: 3747235591223586416}
@@ -9932,6 +9936,7 @@ MonoBehaviour:
   rollSpeed: 20
   maxRoll: 1
   tiltAmount: 2
+  otherside: 0
   jetpackManager: {fileID: 6714566845352131327}
 --- !u!136 &6749566933234491440
 CapsuleCollider:
@@ -9997,12 +10002,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orientation: {fileID: 8806238339909439454}
   playerCam: {fileID: 0}
+  dashIcons: []
   dashSpeed: 20
   dashUpwardForce: 0
   dashDuration: 0.25
+  dashesCount: 0
   cam: {fileID: 0}
   dashFov: 72
   dashCooldown: 0.7
+  dashRegen: 0
   dashKey: 304
 --- !u!1 &7378344856055869855
 GameObject:
@@ -10085,3 +10093,5 @@ MonoBehaviour:
   fuelText: {fileID: 0}
   fullFuel: 0.7
   flyForce: 0.18
+  fuel: 0
+  playerRB: {fileID: 0}
