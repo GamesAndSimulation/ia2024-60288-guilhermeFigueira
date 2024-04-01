@@ -218,6 +218,13 @@ public class PlayerScript : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
+        if(horizontalInput != 0 && verticalInput != 0){
+           gunAnimator.SetBool("isWalking", true);
+        }
+        else{
+           gunAnimator.SetBool("isWalking", false);
+        }
+
         if (Input.GetKey(KeyCode.Space))
         {
             walkSpeed = Mathf.Clamp(walkSpeed + 0.1f, initialWalkSpeed, sprintSpeed);

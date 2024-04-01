@@ -23600,6 +23600,8 @@ MonoBehaviour:
   sensY: 400
   orientation: {fileID: 129573165}
   playerScript: {fileID: 129573167}
+  shakeDuration: 0.1
+  shakeMagnitude: 0.8
 --- !u!114 &991204085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24798,6 +24800,30 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3747235591223586416, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.atime0
+      value: 11565
+      objectReference: {fileID: 0}
+    - target: {fileID: 3747235591223586416, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.atime1
+      value: 12722
+      objectReference: {fileID: 0}
+    - target: {fileID: 3747235591223586416, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.atime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 3747235591223586416, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.a
+      value: 0.79607844
+      objectReference: {fileID: 0}
+    - target: {fileID: 3747235591223586416, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.a
+      value: 0.7254902
+      objectReference: {fileID: 0}
+    - target: {fileID: 3747235591223586416, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.m_NumAlphaKeys
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4756354470769091808, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
       propertyPath: cam
       value: 
@@ -24850,6 +24876,10 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 991204083}
+    - target: {fileID: 6701629011594054134, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
+      propertyPath: health
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 6701629011594054134, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
       propertyPath: _volume
       value: 
