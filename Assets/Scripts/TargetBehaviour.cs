@@ -46,10 +46,13 @@ public class TargetBehaviour : MonoBehaviour
         Destroy(instantiatedBullet, 5);
     }
  
+    public float MonsterSpeed;
+
     // Update is called once per frame
     void Update()
     {
-        transform.position += direction;
+        //transform.position += direction;
+        GetComponent<Rigidbody>().AddForce(direction.normalized * MonsterSpeed, ForceMode.Force);
         transform.LookAt(Camera.main.transform); //Billboard effect
     }
  

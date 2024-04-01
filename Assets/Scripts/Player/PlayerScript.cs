@@ -414,37 +414,18 @@ public class PlayerScript : MonoBehaviour
         readyToJump = true;
     }
 
+    private bool isDamageEffectRunning = false;
+
     public void Damage(int damage)
     {
         health -= damage;
         healthText.text = health.ToString();
-        StopCoroutine(DamageEffect());	
-        StartCoroutine(DamageEffect());
         if (health <= 0)
         {
             Die();
         }
     }
 
-    private IEnumerator DamageEffect(){
-        _vignette.enabled.Override(false);
-        _vignette.intensity.Override(0f);
-        bloodIntensity = .4f;
-        _vignette.enabled.Override(true);
-        _vignette.intensity.Override(bloodIntensity);
-
-        //yield return new WaitForSeconds(0.4f);
-
-        while (bloodIntensity > 0)
-        {
-            bloodIntensity -= Time.deltaTime / 2;
-            _vignette.intensity.Override(bloodIntensity);
-            yield return null;
-        }
-
-        _vignette.enabled.Override(false);
-        yield break;
-    }
 
     private void Die()
     {
