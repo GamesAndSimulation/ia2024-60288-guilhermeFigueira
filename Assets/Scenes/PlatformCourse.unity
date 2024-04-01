@@ -4560,7 +4560,7 @@ GameObject:
   - component: {fileID: 391077108}
   - component: {fileID: 391077107}
   - component: {fileID: 391077106}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7137,7 +7137,7 @@ GameObject:
   - component: {fileID: 485889209}
   - component: {fileID: 485889208}
   - component: {fileID: 485889207}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21496,7 +21496,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6701629011594054134, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
       propertyPath: fireforce
-      value: 40
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: 6701629011594054134, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
       propertyPath: jumpForce
@@ -53893,6 +53893,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1120026012}
     m_Modifications:
+    - target: {fileID: 260154665838096244, guid: 197a906cf63864242a1778a4e0f18d4b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 859671212739730491, guid: 197a906cf63864242a1778a4e0f18d4b, type: 3}
       propertyPath: m_Mesh
       value: 

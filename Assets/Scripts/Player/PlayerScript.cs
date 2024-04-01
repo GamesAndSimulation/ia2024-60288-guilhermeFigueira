@@ -169,6 +169,19 @@ public class PlayerScript : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
+        if (Input.GetKey(KeyCode.Space))
+        {
+            walkSpeed = Mathf.Clamp(walkSpeed + 0.1f, initialWalkSpeed, sprintSpeed);
+            Debug.Log(walkSpeed);
+            if(readyToJump && grounded){
+
+                readyToJump = false;
+
+                Jump();
+
+                Invoke(nameof(ResetJump), jumpCooldown);
+            }
+        }
         if (!grounded && !jetpackManager.usingJetpack)
         {
             ApplyAdditionalGravityForce();
@@ -193,19 +206,6 @@ public class PlayerScript : MonoBehaviour
            gunAnimator.SetBool("isWalking", false);
         }
 
-        if (Input.GetKey(KeyCode.Space))
-        {
-            walkSpeed = Mathf.Clamp(walkSpeed + 0.1f, initialWalkSpeed, sprintSpeed);
-            Debug.Log(walkSpeed);
-            if(readyToJump && grounded){
-
-                readyToJump = false;
-
-                Jump();
-
-                Invoke(nameof(ResetJump), jumpCooldown);
-            }
-        }
         if(Input.GetKeyUp(KeyCode.Space)){
             walkSpeed = initialWalkSpeed;
         }
@@ -220,7 +220,7 @@ public class PlayerScript : MonoBehaviour
                         GameObject instantiatedBullet =
                             Instantiate(projectile, Camera.main.transform.position + Camera.main.transform.forward, Camera.main.transform.rotation);
                         instantiatedBullet.tag = "PlayerProjectile";
-                        instantiatedBullet.GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * fireforce);
+                        instantiatedBullet.GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * fireforce, ForceMode.Impulse);
                         Destroy(instantiatedBullet, 5);
                         bullets--;
                         bulletsText.text = String.Format("{0} / 14", bullets);
