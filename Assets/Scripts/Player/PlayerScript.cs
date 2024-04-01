@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using TMPro;
 using TMPro.EditorUtilities;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -14,6 +16,8 @@ public class PlayerScript : MonoBehaviour
 
     [Header("References")]
     public GameObject deathScreen;
+    public TextMeshProUGUI healthText;
+    public TextMeshProUGUI bulletsText;
     public PostProcessVolume _volume;
     Vignette _vignette;
     public float bloodIntensity = 0;
@@ -256,16 +260,18 @@ public class PlayerScript : MonoBehaviour
                         instantiatedBullet.GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * fireforce);
                         Destroy(instantiatedBullet, 5);
                         bullets--;
+                        bulletsText.text = String.Format("{0} / 14", bullets);
                     }
                 }
 
 
         // Reload
         if(Input.GetKeyDown(KeyCode.R)){
-            if(bullets < 30){
+            if(bullets < 14){
                 gunAnimator.SetTrigger("Reload");
                 AudioManager.Instance.PlaySound(reloadSound);
-                bullets = 30; 
+                bullets = 14; 
+                bulletsText.text = String.Format("{0} / 14", bullets);
             }
         }
 
@@ -423,6 +429,8 @@ public class PlayerScript : MonoBehaviour
     public void Damage(int damage)
     {
         health -= damage;
+        healthText.text = health.ToString();
+        StopCoroutine(DamageEffect());	
         StartCoroutine(DamageEffect());
         if (health <= 0)
         {
@@ -431,6 +439,8 @@ public class PlayerScript : MonoBehaviour
     }
 
     private IEnumerator DamageEffect(){
+        _vignette.enabled.Override(false);
+        _vignette.intensity.Override(0f);
         bloodIntensity = .4f;
         _vignette.enabled.Override(true);
         _vignette.intensity.Override(bloodIntensity);
