@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using TMPro;
-using TMPro.EditorUtilities;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -218,7 +217,7 @@ public class PlayerScript : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        if(horizontalInput != 0 && verticalInput != 0){
+        if(horizontalInput != 0 || verticalInput != 0){
            gunAnimator.SetBool("isWalking", true);
         }
         else{
@@ -437,7 +436,7 @@ public class PlayerScript : MonoBehaviour
     private void Die()
     {
         deathScreen.SetActive(true);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }   
 
 }
