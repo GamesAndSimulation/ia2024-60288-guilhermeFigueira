@@ -166,37 +166,6 @@ public class PlayerScript : MonoBehaviour
     Camera.main.transform.localEulerAngles = new Vector3(currentTilt, Camera.main.transform.localEulerAngles.y, Camera.main.transform.localEulerAngles.z);
 }
 
-    private void CameraTiltingFuck(){
-
-        // Horizontal movement tilt
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        float rollThisFrame = horizontalInput * rollSpeed * Time.deltaTime;
-        
-        currentRoll = Mathf.Clamp(currentRoll + rollThisFrame, -maxRoll, maxRoll);
-        
-        Debug.Log(currentRoll);
-        Debug.Log(Camera.main);
-        // Check main camera
-        Camera.main.transform.Rotate(0, 0, currentRoll, Space.Self);
-        if(horizontalInput == 0)
-        {
-            float returnAdjustment = -currentRoll * Time.deltaTime * rollSpeed;
-            Camera.main.transform.Rotate(0, 0, returnAdjustment, Space.Self);
-            currentRoll += returnAdjustment;
-        }
-
-        // Vertical jumping tilt - NOT WORKING
-        if(!grounded){
-            float normalizedVelocityY = Mathf.Clamp(rb.velocity.y / 3.0f, -1f, 1f);
-            currentTilt = Mathf.Lerp(currentTilt, tiltAmount * normalizedVelocityY, Time.deltaTime * rollSpeed);
-        }
-        else{
-            currentTilt = Mathf.Lerp(currentTilt, 0, Time.deltaTime * rollSpeed * 5);
-        }
-        //Vector3 currentRotation = Camera.main.transform.localEulerAngles;
-        //Camera.main.transform.localEulerAngles = new Vector3(currentRotation.x + currentTilt, currentRotation.y, currentRotation.z);
-    }
-
     private void FixedUpdate()
     {
         MovePlayer();
