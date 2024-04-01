@@ -241,7 +241,7 @@ public class PlayerScript : MonoBehaviour
                     }
                     else{
                         gunAnimator.SetTrigger("Shoot");
-                        AudioManager.Instance.PlaySound(gunShotSound);
+                        AudioManager.Instance.PlaySound(gunShotSound, false, 1f);
                         GameObject instantiatedBullet =
                             Instantiate(projectile, Camera.main.transform.position + Camera.main.transform.forward, Camera.main.transform.rotation);
                         instantiatedBullet.tag = "PlayerProjectile";

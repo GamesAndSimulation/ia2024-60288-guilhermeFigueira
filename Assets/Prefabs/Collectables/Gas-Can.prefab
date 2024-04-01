@@ -5031,6 +5031,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd51b9bc2d7894672b04ee17f59921ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickUpSound: {fileID: 8300000, guid: 8be5bf40feb84ac43b94f607ac9a06a6, type: 3}
   jetpackManager: {fileID: 0}
   height: 0
 --- !u!135 &1965534230140764665

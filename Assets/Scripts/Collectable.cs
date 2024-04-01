@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
+    public AudioClip pickUpSound;
     public JetpackManager jetpackManager;
     public float height;
     
@@ -24,6 +25,7 @@ public class Collectable : MonoBehaviour
         if (other.tag == "Player")
         {
             //jetpackManager.fullFuel *= 1.3f;
+            AudioManager.instance.PlaySound(pickUpSound, false, 1.0f);
             jetpackManager.fuel = jetpackManager.fullFuel;
             jetpackManager.fuelText.text = $"{jetpackManager.fuel.ToString("F1")} / {jetpackManager.fullFuel.ToString("F1")}";
             Destroy(gameObject);

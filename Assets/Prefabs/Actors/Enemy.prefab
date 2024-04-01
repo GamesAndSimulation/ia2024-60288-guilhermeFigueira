@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dea3691c666c61c4ea8831e826f7fc4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 3987931314373161340, guid: 74bcd7401e1b83443a0ed9f9075cb98a, type: 3}
+  projectile: {fileID: 3987931314373161340, guid: df5cf27de05e5234f82ed8d770f52dff, type: 3}
   fireforce: 4
   speedRange: 0.01
   directionTime: 1.5
