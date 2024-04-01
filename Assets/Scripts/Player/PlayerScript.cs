@@ -84,13 +84,6 @@ public class PlayerScript : MonoBehaviour
     public float airMultiplier;
     bool readyToJump;
 
-    //[Header("Camera Settings")]
-    //private float pitch = 0.0f;
-    //private float yaw = 0.0f;
-    //private Vector3 velocity;
-    //private float mouseSpeed = 100.0f;
-    //public CharacterController characterController;
- 
     [Header("Gun and Enemies")]
     public Animator gunAnimator;
     public EnemySpawner enemySpawner;
@@ -104,14 +97,12 @@ public class PlayerScript : MonoBehaviour
     public bool otherside = false;
 
  
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         readyToJump = true;
         initialWalkSpeed = walkSpeed;
-        //characterController = GetComponent<CharacterController>();
  
         _volume.profile.TryGetSettings<Vignette>(out _vignette);
 
@@ -128,11 +119,8 @@ public class PlayerScript : MonoBehaviour
 
     }
  
-    // Update is called once per frame
     void Update()
     {
-        // Raycast and show gizmo of the raycast
-        //grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight / 2 + 0.1f, whatIsGround);
         grounded = Physics.CheckSphere(groundCheck.position, groundDistance, whatIsGround);
         Debug.DrawRay(transform.position, Vector3.down * (playerHeight / 2 + 0.1f), Color.red);
 
@@ -445,11 +433,11 @@ public class PlayerScript : MonoBehaviour
         _vignette.enabled.Override(true);
         _vignette.intensity.Override(bloodIntensity);
 
-        yield return new WaitForSeconds(0.4f);
+        //yield return new WaitForSeconds(0.4f);
 
         while (bloodIntensity > 0)
         {
-            bloodIntensity -= Time.deltaTime;
+            bloodIntensity -= Time.deltaTime / 2;
             _vignette.intensity.Override(bloodIntensity);
             yield return null;
         }
