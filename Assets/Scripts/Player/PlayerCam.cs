@@ -38,8 +38,7 @@ public class PlayerCam : MonoBehaviour
         Debug.Log($"X Rotation: {xRotation}, Y Rotation: {yRotation}, Z Rotation: {zRotation}");
 
 
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, zRotation);
-        Debug.Log(transform.rotation.eulerAngles);
+        transform.localRotation = Quaternion.Euler(xRotation, yRotation, zRotation);
         orientation.rotation = Quaternion.Euler(0f, yRotation, 0f);
 
         //if(Input.GetMouseButtonUp(0)){
