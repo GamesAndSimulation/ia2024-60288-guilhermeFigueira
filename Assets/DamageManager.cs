@@ -28,7 +28,7 @@ public class DamageManager : MonoBehaviour
         if (other.gameObject.tag == "EnemyProjectile")
         {
             Debug.Log("PLAYER HIT");
-            transform.parent.GetComponent<PlayerScript>().Damage(10);
+            transform.parent.GetComponent<PlayerScript>().ChangeHealth(10);
             StartCoroutine(DamageEffect());
             Destroy(other.gameObject);
         }

@@ -13,6 +13,7 @@ public class EnemyTrigger : MonoBehaviour
     [Header("Door")]
     public Animator doorAnimator;
     public TextMeshPro doorSign;
+    public Light doorLight;
     private PlayerScript _playerScript;
     
 
@@ -28,6 +29,7 @@ public class EnemyTrigger : MonoBehaviour
             doorAnimator.SetTrigger("DoorOpen");
             doorSign.text = "Proceed";
             doorSign.color = Color.green;
+            doorLight.color = Color.green;
             _playerScript.enemyKillCount = 0;
         }
     }

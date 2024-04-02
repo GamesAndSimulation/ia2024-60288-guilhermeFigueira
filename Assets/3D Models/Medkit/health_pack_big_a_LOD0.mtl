@@ -1,0 +1,7 @@
+newmtl health_pack_big_a
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Ks 0.50 0.50 0.50
+map_Kd health_pack_big_a.png
+map_bump health_pack_big_a_n.png

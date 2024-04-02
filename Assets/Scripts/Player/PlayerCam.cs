@@ -26,19 +26,16 @@ public class PlayerCam : MonoBehaviour
     }
 
     void Update(){
-        float mouseX = Input.GetAxisRaw("Mouse X") * sensX * Time.fixedDeltaTime;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * sensY * Time.fixedDeltaTime;
-
-        Debug.Log($"Mouse X: {mouseX}, Mouse Y: {mouseY}");
+        float mouseX = Input.GetAxisRaw("Mouse X") * sensX * Time.deltaTime;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * sensY * Time.deltaTime;
 
         yRotation += mouseX;
         zRotation = playerScript.currentRoll;
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-        Debug.Log($"X Rotation: {xRotation}, Y Rotation: {yRotation}, Z Rotation: {zRotation}");
 
 
-        transform.localRotation = Quaternion.Euler(xRotation, yRotation, zRotation);
+        transform.parent.rotation = Quaternion.Euler(xRotation, yRotation, zRotation);
         orientation.rotation = Quaternion.Euler(0f, yRotation, 0f);
 
         if(Input.GetMouseButtonUp(0)){
@@ -47,7 +44,7 @@ public class PlayerCam : MonoBehaviour
 
         if(shakeTimer > 0){
             Quaternion shakeOffset = Quaternion.Euler(PerlinShake() * shakeMagnitude);
-            transform.localRotation = Quaternion.Euler(xRotation, yRotation, zRotation) * shakeOffset;
+            transform.parent.rotation = Quaternion.Euler(xRotation, yRotation, zRotation) * shakeOffset;
             shakeTimer -= Time.deltaTime;
         }
     }

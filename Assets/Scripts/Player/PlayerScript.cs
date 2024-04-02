@@ -392,20 +392,23 @@ public class PlayerScript : MonoBehaviour
 
     private bool isDamageEffectRunning = false;
 
-    public void Damage(int damage)
+    public void ChangeHealth(int healthIncrement)
     {
-        health -= damage;
+        health -= healthIncrement;
+        health = Mathf.Clamp(health, 0, 100);
         healthText.text = health.ToString();
         if (health <= 0)
         {
             Die();
         }
     }
+    
 
 
     private void Die()
     {
         deathScreen.SetActive(true);
+        GameManager.Instance.ReloadFromCheckpoint(3);
         gameObject.SetActive(false);
     }   
 

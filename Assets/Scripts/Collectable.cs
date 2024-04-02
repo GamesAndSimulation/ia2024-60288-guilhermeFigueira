@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
+    public enum CollectableType
+    {
+        FUEL,
+        MEDKIT
+    }
+    
     public AudioClip pickUpSound;
+    public CollectableType type;
     private JetpackManager jetpackManager;
     private float height;
+    
     
     void Start()
     {
@@ -28,9 +36,28 @@ public class Collectable : MonoBehaviour
         {
             //jetpackManager.fullFuel *= 1.3f;
             AudioManager.instance.PlaySound(pickUpSound, false, 1.0f);
-            jetpackManager.fuel = jetpackManager.fullFuel;
-            jetpackManager.fuelText.text = $"{jetpackManager.fuel.ToString("F1")} / {jetpackManager.fullFuel.ToString("F1")}";
+            switch (type)
+            {
+                 case CollectableType.FUEL:
+                     FuelTrigger();
+                     break;
+                 case CollectableType.MEDKIT:
+                     MedkitTrigger();
+                     break;
+            } 
             Destroy(gameObject);
         }
+    }
+
+    private void MedkitTrigger()
+    {
+        PlayerScript playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerScript>();
+        playerScript.ChangeHealth(-50);
+    }
+
+    private void FuelTrigger()
+    {
+        jetpackManager.fuel = jetpackManager.fullFuel;
+        jetpackManager.fuelText.text = $"{jetpackManager.fuel.ToString("F1")} / {jetpackManager.fullFuel.ToString("F1")}";
     }
 }
