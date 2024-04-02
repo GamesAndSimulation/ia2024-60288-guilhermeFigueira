@@ -1170,6 +1170,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bf43203fa1da14e188cd3700677fb947, type: 3}
   m_PrefabInstance: {fileID: 172015758}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &188999437 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8806238339909439454, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
+  m_PrefabInstance: {fileID: 1086304674}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &221472472
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20264,9 +20269,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf1b9fa323be64bb48678b9415673a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensX: 400
-  sensY: 400
-  orientation: {fileID: 129573165}
+  sensX: 200
+  sensY: 200
+  orientation: {fileID: 188999437}
   playerScript: {fileID: 129573167}
   shakeDuration: 0.1
   shakeMagnitude: 0.8
@@ -21513,6 +21518,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4756354470769091808, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
+      propertyPath: orientation
+      value: 
+      objectReference: {fileID: 188999437}
+    - target: {fileID: 4756354470769091808, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
       propertyPath: dashCooldown
       value: 0.18
       objectReference: {fileID: 0}
@@ -21536,8 +21545,16 @@ PrefabInstance:
       propertyPath: dashIcons.Array.data[2]
       value: 
       objectReference: {fileID: 1605416852}
+    - target: {fileID: 5522546218733130419, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5709286012791305052, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6241424453668085706, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6701629011594054134, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
@@ -21596,6 +21613,10 @@ PrefabInstance:
       propertyPath: gunAnimator
       value: 
       objectReference: {fileID: 1262290755}
+    - target: {fileID: 6701629011594054134, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
+      propertyPath: orientation
+      value: 
+      objectReference: {fileID: 188999437}
     - target: {fileID: 6701629011594054134, guid: 867eb8e9a89004984b1c59a69b7483e4, type: 3}
       propertyPath: sprintSpeed
       value: 15

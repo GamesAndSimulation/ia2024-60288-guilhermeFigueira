@@ -26,27 +26,31 @@ public class PlayerCam : MonoBehaviour
     }
 
     void Update(){
-        float mouseX = Input.GetAxisRaw("Mouse X") * sensX * Time.deltaTime;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * sensY * Time.deltaTime;
+        float mouseX = Input.GetAxisRaw("Mouse X") * sensX * Time.fixedDeltaTime;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * sensY * Time.fixedDeltaTime;
+
+        Debug.Log($"Mouse X: {mouseX}, Mouse Y: {mouseY}");
 
         yRotation += mouseX;
         zRotation = playerScript.currentRoll;
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        Debug.Log($"X Rotation: {xRotation}, Y Rotation: {yRotation}, Z Rotation: {zRotation}");
 
 
         transform.rotation = Quaternion.Euler(xRotation, yRotation, zRotation);
+        Debug.Log(transform.rotation.eulerAngles);
         orientation.rotation = Quaternion.Euler(0f, yRotation, 0f);
 
-        if(Input.GetMouseButtonUp(0)){
-            Shake();
-        }
+        //if(Input.GetMouseButtonUp(0)){
+        //    Shake();
+        //}
 
-        if(shakeTimer > 0){
-            Quaternion shakeOffset = Quaternion.Euler(PerlinShake() * shakeMagnitude);
-            transform.localRotation = Quaternion.Euler(xRotation, yRotation, zRotation) * shakeOffset;
-            shakeTimer -= Time.deltaTime;
-        }
+        //if(shakeTimer > 0){
+        //    Quaternion shakeOffset = Quaternion.Euler(PerlinShake() * shakeMagnitude);
+        //    transform.localRotation = Quaternion.Euler(xRotation, yRotation, zRotation) * shakeOffset;
+        //    shakeTimer -= Time.deltaTime;
+        //}
     }
 
     public void Shake(){
