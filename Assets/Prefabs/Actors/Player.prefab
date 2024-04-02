@@ -9903,6 +9903,8 @@ MonoBehaviour:
   bullets: 30
   health: 100
   deathScreen: {fileID: 0}
+  healthText: {fileID: 0}
+  bulletsText: {fileID: 0}
   _volume: {fileID: 0}
   bloodIntensity: 0
   projectile: {fileID: 3987931314373161340, guid: df5cf27de05e5234f82ed8d770f52dff, type: 3}
