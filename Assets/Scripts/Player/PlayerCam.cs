@@ -30,17 +30,15 @@ public class PlayerCam : MonoBehaviour
         float mouseY = Input.GetAxisRaw("Mouse Y") * sensY * Time.deltaTime;
 
         yRotation += mouseX;
-
         zRotation = playerScript.currentRoll;
-
         xRotation -= mouseY;
-
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+
 
         transform.rotation = Quaternion.Euler(xRotation, yRotation, zRotation);
         orientation.rotation = Quaternion.Euler(0f, yRotation, 0f);
 
-        if(Input.GetMouseButtonDown(0)){
+        if(Input.GetMouseButtonUp(0)){
             Shake();
         }
 
@@ -56,8 +54,8 @@ public class PlayerCam : MonoBehaviour
     }
 
    private Vector3 PerlinShake(){
-    float x = (Mathf.PerlinNoise(Time.time * shakeMagnitude, 0f) * 2 - 1) * shakeMagnitude;
-    float y = (Mathf.PerlinNoise(0f, Time.time * shakeMagnitude) * 2 - 1) * shakeMagnitude;
+    float x = (Mathf.PerlinNoise(Time.time, 0f) * 2 - 1) * shakeMagnitude;
+    float y = (Mathf.PerlinNoise(0f, Time.time) * 2 - 1) * shakeMagnitude;
     return new Vector3(x, y, 0f);
 } 
 
