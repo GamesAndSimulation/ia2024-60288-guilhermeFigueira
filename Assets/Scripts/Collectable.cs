@@ -5,11 +5,13 @@ using UnityEngine;
 public class Collectable : MonoBehaviour
 {
     public AudioClip pickUpSound;
-    public JetpackManager jetpackManager;
-    public float height;
+    private JetpackManager jetpackManager;
+    private float height;
     
     void Start()
     {
+        height = transform.position.y;
+        jetpackManager = GameObject.FindWithTag("Jetpack").GetComponent<JetpackManager>();
     }
 
     void Update()

@@ -41,15 +41,15 @@ public class PlayerCam : MonoBehaviour
         transform.localRotation = Quaternion.Euler(xRotation, yRotation, zRotation);
         orientation.rotation = Quaternion.Euler(0f, yRotation, 0f);
 
-        //if(Input.GetMouseButtonUp(0)){
-        //    Shake();
-        //}
+        if(Input.GetMouseButtonUp(0)){
+            Shake();
+        }
 
-        //if(shakeTimer > 0){
-        //    Quaternion shakeOffset = Quaternion.Euler(PerlinShake() * shakeMagnitude);
-        //    transform.localRotation = Quaternion.Euler(xRotation, yRotation, zRotation) * shakeOffset;
-        //    shakeTimer -= Time.deltaTime;
-        //}
+        if(shakeTimer > 0){
+            Quaternion shakeOffset = Quaternion.Euler(PerlinShake() * shakeMagnitude);
+            transform.localRotation = Quaternion.Euler(xRotation, yRotation, zRotation) * shakeOffset;
+            shakeTimer -= Time.deltaTime;
+        }
     }
 
     public void Shake(){

@@ -66,6 +66,7 @@ public class TargetBehaviour : MonoBehaviour
                 if (heath <= 0)
                 {
                     AudioManager.Instance.PlaySound(_DieSound, true);
+                    GameObject.FindWithTag("Player").GetComponent<PlayerScript>().enemyKillCount += 1;
                     Destroy(gameObject);
                     isDying = true;
                 }

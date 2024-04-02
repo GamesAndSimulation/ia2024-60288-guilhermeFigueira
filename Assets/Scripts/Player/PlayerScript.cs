@@ -12,6 +12,7 @@ public class PlayerScript : MonoBehaviour
 {
     public int bullets = 20;
     public float health = 100;
+    public int enemyKillCount = 0;
 
     [Header("References")]
     public GameObject deathScreen;
