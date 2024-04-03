@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,9 +10,16 @@ public class DamageManager : MonoBehaviour
     public PostProcessVolume _volume;
     public float bloodIntensity;
     Vignette _vignette;
+    
+    [SerializeField] private List<HostileThing> _hostileThings;
+    private Dictionary<string, HostileThing> _hostileTagsAndDamage;
+    
+    public float continuousDamageDelay = 1f;
+    private float continuousDamageDelayTimer;
 
     void Start()
     {
+        continuousDamageDelayTimer = -1;
         _volume.profile.TryGetSettings(out _vignette);
 
         if(!_vignette){
@@ -20,23 +28,53 @@ public class DamageManager : MonoBehaviour
         else{
             _vignette.enabled.Override(false);
         }
+        
+        _hostileTagsAndDamage = new Dictionary<string, HostileThing>();
+
+        foreach (HostileThing hostileThing in _hostileThings)
+        {
+            _hostileTagsAndDamage.Add(hostileThing.tag, hostileThing);
+        }
 
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "EnemyProjectile")
+        if (_hostileTagsAndDamage.ContainsKey(other.tag))
         {
-            Debug.Log("PLAYER HIT");
-            transform.parent.GetComponent<PlayerScript>().ChangeHealth(10);
-            StartCoroutine(DamageEffect());
-            Destroy(other.gameObject);
+            if (!_hostileTagsAndDamage[other.tag].isContinuous)
+            {
+                transform.parent.GetComponent<PlayerScript>().ChangeHealth(_hostileTagsAndDamage[other.tag].damage);
+                StartCoroutine(DamageEffect());
+                Destroy(other.gameObject);
+            }
         }
     }
 
-
+    private void OnTriggerStay(Collider other)
+    {
+        if (_hostileTagsAndDamage.ContainsKey(other.tag) && _hostileTagsAndDamage[other.tag].isContinuous)
+        {
+            if(continuousDamageDelayTimer > 0){
+                continuousDamageDelayTimer -= Time.deltaTime;
+                return;
+            } 
+            
+            continuousDamageDelayTimer = continuousDamageDelay;
+            transform.parent.GetComponent<PlayerScript>().ChangeHealth(_hostileTagsAndDamage[other.tag].damage);
+            StartCoroutine(DamageEffect());
+        }
+    }
+    
+    private void OnTriggerExit(Collider other)
+    {
+        if (_hostileTagsAndDamage.ContainsKey(other.tag) && _hostileTagsAndDamage[other.tag].isContinuous)
+        {
+            continuousDamageDelayTimer = -1;
+        }
+    }
+    
     private IEnumerator DamageEffect(){
-        //isDamageEffectRunning = true;
         _vignette.enabled.Override(false);
         _vignette.intensity.Override(0f);
         bloodIntensity = .4f;
@@ -53,6 +91,13 @@ public class DamageManager : MonoBehaviour
         }
         _vignette.intensity.Override(0f);
         _vignette.enabled.Override(false);
-        //isDamageEffectRunning = false;
     }
+}
+
+[Serializable]
+public class HostileThing
+{
+    public string tag;
+    public int damage;
+    public bool isContinuous;
 }

@@ -103,6 +103,7 @@ public class PlayerScript : MonoBehaviour
         rb.freezeRotation = true;
         readyToJump = true;
         initialWalkSpeed = walkSpeed;
+        isReloading = false;
  
         _volume.profile.TryGetSettings<Vignette>(out _vignette);
 
@@ -230,11 +231,9 @@ public class PlayerScript : MonoBehaviour
 
         // Reload
         if(Input.GetKeyDown(KeyCode.R)){
-            if(bullets < 14){
-                gunAnimator.SetTrigger("Reload");
-                AudioManager.Instance.PlaySound(reloadSound);
-                bullets = 14; 
-                bulletsText.text = String.Format("{0} / 14", bullets);
+            if(bullets < 14)
+            {
+                StartCoroutine(Reload());
             }
         }
 
@@ -247,6 +246,20 @@ public class PlayerScript : MonoBehaviour
         // Press 1
         if(Input.GetKeyDown(KeyCode.Alpha1)){
         }
+    }
+
+    private bool isReloading;
+    
+    private IEnumerator Reload()
+    {
+        isReloading = true;
+        gunAnimator.SetTrigger("Reload");
+        AnimationClip reloadAnimation = gunAnimator.runtimeAnimatorController.animationClips[2]; // 1 is the index of the reload animation
+        AudioManager.Instance.PlaySound(reloadSound);
+        yield return new WaitForSeconds(reloadAnimation.length);
+        bullets = 14; 
+        bulletsText.text = String.Format("{0} / 14", bullets);
+        isReloading = false;
     }
 
 
@@ -296,12 +309,12 @@ public class PlayerScript : MonoBehaviour
         {
             if (keepMomentum)
             {
-                StopAllCoroutines();
+                StopAllCoroutinesExcept();
                 StartCoroutine(SmoothlyLerpMoveSpeed());
             }
             else
             {
-                StopAllCoroutines();
+                StopAllCoroutinesExcept();
                 moveSpeed = desiredMoveSpeed;
             }
         }
@@ -309,6 +322,13 @@ public class PlayerScript : MonoBehaviour
         lastDesiredMoveSpeed = desiredMoveSpeed;
         lastState = state;
 
+    }
+
+    private void StopAllCoroutinesExcept()
+    {
+        StopAllCoroutines();
+        if(!isReloading)
+            StartCoroutine(Reload());
     }
 
     private float speedChangeFactor;

@@ -21,6 +21,13 @@ public class PlayerCam : MonoBehaviour
     private float shakeTimer;
 
     private void Start(){
+        
+        transform.parent.forward = orientation.forward;
+
+        Vector3 currentRotation = transform.parent.rotation.eulerAngles;
+        xRotation = currentRotation.x;
+        yRotation = currentRotation.y;
+        
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }

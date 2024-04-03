@@ -5,6 +5,7 @@ using UnityEngine;
 public class FireObstacle : MonoBehaviour
 {
     public GameObject CanonToRotate;
+    public float RotationSpeed = 50f;
     
     void Start()
     {
@@ -13,7 +14,7 @@ public class FireObstacle : MonoBehaviour
 
     void Update()
     {
-        CanonToRotate.transform.Rotate(0, 50 * Time.fixedDeltaTime, 0);
+        CanonToRotate.transform.Rotate(0, RotationSpeed * Time.fixedDeltaTime, 0);
         
     }
 }
