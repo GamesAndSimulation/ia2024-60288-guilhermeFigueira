@@ -59,12 +59,10 @@ public class Dashing : MonoBehaviour
                 dashRegenTimer = dashRegen;
                 dashesCount++;
                 dashIcons[dashesCount-1].SetActive(true);
-                Debug.Log($"Dashes: {dashesCount}");
             }
             else if(dashesCount == 2){
                 dashesCount++;
                 dashIcons[dashesCount-1].SetActive(true);
-                Debug.Log($"Dashes: {dashesCount}");
             }
         }
 
@@ -82,7 +80,6 @@ public class Dashing : MonoBehaviour
 
         dashesCount--;
         dashIcons[dashesCount].SetActive(false);
-        Debug.Log("Dashes: " + dashesCount);
         dashRegenTimer = dashRegen;
         playerScript.dashing = true;
         cam.DoFov(dashFov);

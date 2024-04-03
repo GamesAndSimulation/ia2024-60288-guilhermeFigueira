@@ -173,7 +173,6 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             walkSpeed = Mathf.Clamp(walkSpeed + 0.1f, initialWalkSpeed, sprintSpeed);
-            Debug.Log(walkSpeed);
             if(readyToJump && grounded){
 
                 readyToJump = false;
