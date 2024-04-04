@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using DG.Tweening;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
@@ -9,7 +10,7 @@ public class Dashing : MonoBehaviour
 
     [Header("References")]
     public Transform orientation;
-    public Transform playerCam;
+    public Camera weaponCamera;
     private Rigidbody rb;
     private PlayerScript playerScript;
     public GameObject[] dashIcons;
@@ -89,6 +90,7 @@ public class Dashing : MonoBehaviour
         dashRegenTimer = dashRegen;
         playerScript.dashing = true;
         cam.DoFov(dashFov);
+        weaponCamera.DOFieldOfView(dashFov, 0.25f);
 
         Vector3 forceToApply = orientation.forward * dashSpeed + orientation.up * dashUpwardForce;
         delayedForceToApply = forceToApply;
@@ -109,6 +111,7 @@ public class Dashing : MonoBehaviour
     {
         playerScript.dashing = false;
         cam.DoFov(defaultFov);
+        weaponCamera.DOFieldOfView(defaultFov, 0.25f);
     }
 
 
