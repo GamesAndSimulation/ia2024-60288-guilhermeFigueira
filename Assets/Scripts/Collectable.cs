@@ -52,7 +52,7 @@ public class Collectable : MonoBehaviour
     private void MedkitTrigger()
     {
         PlayerScript playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerScript>();
-        playerScript.ChangeHealth(-50);
+        playerScript.ChangeHealth(-60);
     }
 
     private void FuelTrigger()
