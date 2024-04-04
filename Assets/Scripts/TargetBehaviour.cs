@@ -41,7 +41,6 @@ public class TargetBehaviour : MonoBehaviour
         GameObject instantiatedBullet =
             Instantiate(projectile, transform.position + fireDirection, transform.rotation);
         instantiatedBullet.tag = "EnemyProjectile";
-        //instantiatedBullet.GetComponent<SphereCollider>().isTrigger = true;
         instantiatedBullet.GetComponent<Rigidbody>().AddForce(fireDirection * fireforce);
         Destroy(instantiatedBullet, 5);
     }
