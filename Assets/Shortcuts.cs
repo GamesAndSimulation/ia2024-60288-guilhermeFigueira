@@ -5,11 +5,18 @@ using UnityEngine;
 public class Shortcuts : MonoBehaviour
 {
     private GameObject player;
-    public GameObject[] shortcuts;
+    private GameObject[] shortcuts;
     
     void Start()
     {
         player = GameObject.FindWithTag("Player");
+        int i = 0;
+        shortcuts = new GameObject[transform.childCount];
+        foreach (Transform child in transform)
+        {
+            shortcuts[i] = child.gameObject;
+            i++;
+        }
     }
 
     void Update()
@@ -20,6 +27,8 @@ public class Shortcuts : MonoBehaviour
             player.transform.position = shortcuts[1].transform.position;
         if(Input.GetKeyDown(KeyCode.Alpha3))
             player.transform.position = shortcuts[2].transform.position;
+        if(Input.GetKeyDown(KeyCode.Alpha4))
+            player.transform.position = shortcuts[3].transform.position;
 
     }
 }

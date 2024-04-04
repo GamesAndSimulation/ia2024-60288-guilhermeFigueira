@@ -55,15 +55,21 @@ public class Dashing : MonoBehaviour
             dashRegenTimer -= Time.deltaTime;
         }
         else{
-            if(dashesCount < 2){
+            if (playerScript.grounded)
+            {
+                dashesCount = 1;
                 dashRegenTimer = dashRegen;
-                dashesCount++;
-                dashIcons[dashesCount-1].SetActive(true);
             }
-            else if(dashesCount == 2){
-                dashesCount++;
-                dashIcons[dashesCount-1].SetActive(true);
-            }
+
+            //if(dashesCount < 2){
+            //    dashRegenTimer = dashRegen;
+            //    dashesCount = 1;
+            //    dashIcons[dashesCount-1].SetActive(true);
+            //}
+            //else if(dashesCount == 2){
+            //    dashesCount = 1;
+            //    dashIcons[dashesCount-1].SetActive(true);
+            //}
         }
 
     }
