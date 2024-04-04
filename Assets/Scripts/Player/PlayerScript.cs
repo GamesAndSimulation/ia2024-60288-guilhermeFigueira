@@ -224,7 +224,7 @@ public class PlayerScript : MonoBehaviour
                         instantiatedBullet.GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * fireforce, ForceMode.Impulse);
                         Destroy(instantiatedBullet, 5);
                         bullets--;
-                        bulletsText.text = String.Format("{0} / 14", bullets);
+                        bulletsText.text = String.Format("{0}", bullets);
                     }
                 }
 
@@ -262,7 +262,7 @@ public class PlayerScript : MonoBehaviour
     
     private void UpdateAmmo(){
         bullets = 14;
-        bulletsText.text = String.Format("{0} / 14", bullets);
+        bulletsText.text = String.Format("{0}", bullets);
         isReloading = false;
     }
 
