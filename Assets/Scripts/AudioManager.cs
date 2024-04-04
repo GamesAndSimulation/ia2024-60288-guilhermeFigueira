@@ -38,7 +38,19 @@ public class AudioManager : MonoBehaviour
         audio.Play();
         Destroy(audio, clipToPlay.length);
     }
- 
+
+    public void PlayDeepSound(AudioClip clipToPlay, float volume = 0.4f)
+    {
+        
+        audioSources.Add(this.AddComponent<AudioSource>());
+        var audio = audioSources[audioSources.Count - 1];
+        audio.volume = volume;
+        audio.clip = clipToPlay;
+        audio.pitch = 0.4f;
+        audio.Play();
+        Destroy(audio, clipToPlay.length);
+    }
+
     public void PlaySoundLooping(AudioClip clipToPlay)
     {
         audioSources.Add(this.AddComponent<AudioSource>());

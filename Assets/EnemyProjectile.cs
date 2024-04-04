@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,5 +14,10 @@ public class EnemyProjectile : MonoBehaviour
             other.gameObject.GetComponent<PlayerScript>().health -= 10;
             Destroy(gameObject);
         }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        Destroy(gameObject);
     }
 }

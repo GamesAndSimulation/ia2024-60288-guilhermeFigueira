@@ -128,8 +128,11 @@ MonoBehaviour:
   directionTime: 1.5
   heath: 30
   _squishDuration: 0.1
+  stretched: 1.5
+  squished: 0.6
   _DieSound: {fileID: 8300000, guid: 1034b3dd3a9784bc68c3ce59d0249310, type: 3}
-  MonsterSpeed: 5
+  MonsterSpeed: 1.7
+  explosion: {fileID: 1289715227485335449, guid: cb8a6372b448fb84d99ce425124d4ff7, type: 3}
 --- !u!135 &1579344476643501716
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ public class JetpackManager : MonoBehaviour
     public float fuel;
     private PlayerScript player;
     [SerializeField] private Rigidbody playerRB;
+    [SerializeField] private GameObject playerOrientation;
     public bool usingJetpack { get; private set; } = false;
 
     void Start(){
@@ -23,7 +24,9 @@ public class JetpackManager : MonoBehaviour
         usingJetpack = false;
     }
 
-    void Update(){
+    void Update()
+    {
+        jetpackSmoke.transform.forward = -playerOrientation.transform.right;
         if(Input.GetButtonDown("Jump") && !player.grounded && !usingJetpack){
             jetpackSmoke.Play();
             AudioManager.Instance.PlaySoundLooping(jetpackSound);

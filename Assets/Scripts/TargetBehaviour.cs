@@ -11,6 +11,8 @@ public class TargetBehaviour : MonoBehaviour
     public float heath = 10;
  
     public float _squishDuration = 0.8f;
+    public float stretched = 1.5f;
+    public float squished = 0.6f;
     public AudioClip _DieSound;
     private Vector3 _firstOriginalScale;
  
@@ -54,17 +56,29 @@ public class TargetBehaviour : MonoBehaviour
         GetComponent<Rigidbody>().AddForce(direction.normalized * MonsterSpeed, ForceMode.Force);
         transform.LookAt(Camera.main.transform); //Billboard effect
     }
- 
+
+    public GameObject explosion;
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "PlayerProjectile" && !isDying)
         {
             if(heath > 0){
+                Instantiate(explosion, collision.transform.position, Quaternion.identity);
+                Instantiate(explosion, transform.position, Quaternion.identity);
                 heath -= 10;
                 StartCoroutine(Squish());
                 if (heath <= 0)
                 {
-                    AudioManager.Instance.PlaySound(_DieSound, true);
+                    bool boss = heath >= 1000;
+
+                    if (heath >= 1000)
+                    {
+                        AudioManager.Instance.PlayDeepSound(_DieSound);
+                    }
+                    else
+                    {
+                        AudioManager.Instance.PlaySound(_DieSound, !boss);
+                    }
                     GameObject.FindWithTag("Player").GetComponent<PlayerScript>().enemyKillCount += 1;
                     Destroy(gameObject);
                     isDying = true;
@@ -96,8 +110,8 @@ public class TargetBehaviour : MonoBehaviour
         float elapsed = 0;
  
         Vector3 originalScale = transform.localScale;
-        Vector3 stretchedScale = new Vector3(originalScale.x * 1.5f, originalScale.y * 0.6f, originalScale.z);
-        Vector3 squishedScale = new Vector3(originalScale.x * 0.6f, originalScale.y * 1.5f, originalScale.z);
+        Vector3 stretchedScale = new Vector3(originalScale.x * stretched, originalScale.y * squished, originalScale.z);
+        Vector3 squishedScale = new Vector3(originalScale.x * squished, originalScale.y * stretched, originalScale.z);
  
         // Stretch
         while (elapsed < _squishDuration)

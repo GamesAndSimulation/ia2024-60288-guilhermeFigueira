@@ -5,8 +5,7 @@ using DG.Tweening;
 
 public class PlayerCam : MonoBehaviour
 {
-    public float sensX;
-    public float sensY;
+    public float sens;
 
     public Transform orientation;
 
@@ -33,8 +32,18 @@ public class PlayerCam : MonoBehaviour
     }
 
     void Update(){
-        float mouseX = Input.GetAxisRaw("Mouse X") * sensX * Time.deltaTime;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * sensY * Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            sens += 50;
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            sens -= 50;
+        }
+
+        float mouseX = Input.GetAxisRaw("Mouse X") * sens * Time.deltaTime;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * sens * Time.deltaTime;
 
         yRotation += mouseX;
         zRotation = playerScript.currentRoll;
