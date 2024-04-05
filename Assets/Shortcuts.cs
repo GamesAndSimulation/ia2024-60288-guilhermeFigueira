@@ -29,6 +29,8 @@ public class Shortcuts : MonoBehaviour
             player.transform.position = shortcuts[2].transform.position;
         if(Input.GetKeyDown(KeyCode.Alpha4))
             player.transform.position = shortcuts[3].transform.position;
+        if(Input.GetKeyDown(KeyCode.Alpha5))
+            player.transform.position = shortcuts[4].transform.position;
 
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
+    public GameObject ambientSoundsHolder;
     private List<AudioSource> audioSources = new List<AudioSource>();
  
     public static AudioManager Instance
@@ -71,5 +72,24 @@ public class AudioManager : MonoBehaviour
                 Destroy(audio);
             }
         }
+    }
+
+    public void StopAmbientSound(int index)
+    {
+        StartCoroutine(FadeOutSound(ambientSoundsHolder.GetComponents<AudioSource>()[index], 1));
+    }
+    
+    private IEnumerator FadeOutSound(AudioSource audioSource, float fadeTime)
+    {
+        float startVolume = audioSource.volume;
+ 
+        while (audioSource.volume > 0)
+        {
+            audioSource.volume -= startVolume * Time.deltaTime / fadeTime;
+            yield return null;
+        }
+ 
+        audioSource.Stop();
+        audioSource.volume = startVolume;
     }
 }

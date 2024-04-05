@@ -231,9 +231,6 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.LeftShift)){
-            Debug.Log("Dash");
-        }
         if(Input.GetKeyDown(KeyCode.V)){
             enemySpawner.SpawnEnemies(15);
         }

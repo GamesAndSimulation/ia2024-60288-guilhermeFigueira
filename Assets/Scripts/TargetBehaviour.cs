@@ -19,12 +19,22 @@ public class TargetBehaviour : MonoBehaviour
  
     private Vector3 direction;
     private bool isDying;
+
+    private bool _isFinalArenaEnemy;
     // Start is called before the first frame update
     void Start()
     {
         InvokeRepeating("ChangeDirection", 0, Random.Range(directionTime/1.5f, directionTime));
         _firstOriginalScale = transform.localScale;
         isDying = false;
+        var finalDoor = GameObject.FindWithTag("FinalDoor");
+        _isFinalArenaEnemy = false;
+        if (transform.position.z > finalDoor.transform.position.z)
+        {
+             _isFinalArenaEnemy = true;
+             finalDoor.GetComponent<FinalArenaTrigger>().AddEnemyToKill();
+             Debug.Log($"Final enemies: {finalDoor.GetComponent<FinalArenaTrigger>().enemiesToKill}");
+        }
     }
  
     void ChangeDirection()
@@ -80,6 +90,8 @@ public class TargetBehaviour : MonoBehaviour
                         AudioManager.Instance.PlaySound(_DieSound, !boss);
                     }
                     GameObject.FindWithTag("Player").GetComponent<PlayerScript>().enemyKillCount += 1;
+                    if (_isFinalArenaEnemy)
+                        GameObject.FindWithTag("FinalDoor").GetComponent<FinalArenaTrigger>().KilledEnemy();
                     Destroy(gameObject);
                     isDying = true;
                 }
@@ -98,6 +110,7 @@ public class TargetBehaviour : MonoBehaviour
                 {
                     AudioManager.Instance.PlaySound(_DieSound, true);
                     GameObject.FindWithTag("Player").GetComponent<PlayerScript>().enemyKillCount += 1;
+                    GameObject.FindWithTag("FinalDoor").GetComponent<FinalArenaTrigger>().KilledEnemy();
                     Destroy(gameObject);
                     isDying = true;
                 }
