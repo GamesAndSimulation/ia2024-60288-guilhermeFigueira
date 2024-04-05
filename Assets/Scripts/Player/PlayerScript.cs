@@ -19,6 +19,7 @@ public class PlayerScript : MonoBehaviour
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI bulletsText;
     public PostProcessVolume _volume;
+    public Camera weaponCamera;
     Vignette _vignette;
     public float bloodIntensity = 0;
  
@@ -166,6 +167,7 @@ public class PlayerScript : MonoBehaviour
     // Applying the calculated tilt to the camera's X-axis
     // Ensuring the tilt effect is applied correctly in addition to any existing roll
     Camera.main.transform.localEulerAngles = new Vector3(currentTilt, Camera.main.transform.localEulerAngles.y, Camera.main.transform.localEulerAngles.z);
+    weaponCamera.transform.localEulerAngles = new Vector3(currentTilt, weaponCamera.transform.localEulerAngles.y, weaponCamera.transform.localEulerAngles.z);
 }
 
     private void FixedUpdate()

@@ -108,9 +108,13 @@ public class TargetBehaviour : MonoBehaviour
                 StartCoroutine(Squish());
                 if (heath <= 0)
                 {
+                    if (transform.position.z > GameObject.FindWithTag("FinalDoor").transform.position.z)
+                    {
+                        GameObject.FindWithTag("FinalDoor").GetComponent<FinalArenaTrigger>().KilledEnemy();
+                    }
+
                     AudioManager.Instance.PlaySound(_DieSound, true);
                     GameObject.FindWithTag("Player").GetComponent<PlayerScript>().enemyKillCount += 1;
-                    GameObject.FindWithTag("FinalDoor").GetComponent<FinalArenaTrigger>().KilledEnemy();
                     Destroy(gameObject);
                     isDying = true;
                 }
