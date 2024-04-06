@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PlatformCourse.unity
     guid: 6e128b3da172d41179119ce9618d04b4
+  - enabled: 1
+    path: Assets/Scenes/Finale.unity
+    guid: b23ac95f417e46641b09822783b9125a
   m_configObjects: {}
