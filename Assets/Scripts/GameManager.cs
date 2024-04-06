@@ -10,6 +10,10 @@ public class GameManager : MonoBehaviour
 {
 
     public static GameManager instance;
+    
+    [Header("Loading")]
+    public GameObject fadeImage;
+    public GameObject LoadingText;
 
     public static GameManager Instance
     {
@@ -36,6 +40,8 @@ public class GameManager : MonoBehaviour
 
     public void ReloadFromCheckpoint()
     {
+        fadeImage.SetActive(true);
+        LoadingText.SetActive(true);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

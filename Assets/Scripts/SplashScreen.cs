@@ -12,6 +12,8 @@ public class SplashScreen : MonoBehaviour
     {
         _videoPlayer = GetComponent<VideoPlayer>();
         hasStartedPlaying = false;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
         
     void Update()
