@@ -20,12 +20,15 @@ public class PlayerScript : MonoBehaviour
     public TextMeshProUGUI bulletsText;
     public PostProcessVolume _volume;
     public Camera weaponCamera;
+    public PlayerCam playerCam;
     Vignette _vignette;
     public float bloodIntensity = 0;
  
     [Header("Gun")]
     public GameObject projectile;
-    public float fireforce = 1000; 
+    public float fireforce = 1000;
+    private float automaticShootTimer;
+    public float automaticShootTime;
  
     [Header("Jetpack")]
     public ParticleSystem jetpackSmoke;
@@ -105,7 +108,7 @@ public class PlayerScript : MonoBehaviour
         readyToJump = true;
         initialWalkSpeed = walkSpeed;
         isReloading = false;
- 
+        automaticShootTimer = 0;
         _volume.profile.TryGetSettings<Vignette>(out _vignette);
 
         if(!_vignette){
@@ -197,6 +200,26 @@ public class PlayerScript : MonoBehaviour
         rb.AddForce(Vector3.down * additionalGravityForce * additionalGravityFactor, ForceMode.Acceleration);
     }
 
+    private void Shoot()
+    {
+        automaticShootTimer = automaticShootTime;
+        if(bullets <= 0){
+            gunAnimator.SetTrigger("Empty");
+            AudioManager.Instance.PlaySound(emptuGunShotSound);
+        }
+        else{
+            playerCam.Shake();
+            AudioManager.Instance.PlaySound(gunShotSound, false, 1f);
+            GameObject instantiatedBullet =
+                Instantiate(projectile, Camera.main.transform.position + Camera.main.transform.forward, Camera.main.transform.rotation);
+            instantiatedBullet.tag = "PlayerProjectile";
+            instantiatedBullet.GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * fireforce, ForceMode.Impulse);
+            Destroy(instantiatedBullet, 5);
+            bullets--;
+            bulletsText.text = String.Format("{0}", bullets);
+        }
+    }
+
     void HandleInputs(){
 
         horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -205,22 +228,60 @@ public class PlayerScript : MonoBehaviour
         if(Input.GetKeyUp(KeyCode.Space)){
             walkSpeed = initialWalkSpeed;
         }
-        if (Input.GetButtonUp("Fire1")){
 
-                    if(bullets <= 0){
-                        AudioManager.Instance.PlaySound(emptuGunShotSound);
-                    }
-                    else{
-                        gunAnimator.SetTrigger("Shoot");
-                        AudioManager.Instance.PlaySound(gunShotSound, false, 1f);
-                        GameObject instantiatedBullet =
-                            Instantiate(projectile, Camera.main.transform.position + Camera.main.transform.forward, Camera.main.transform.rotation);
-                        instantiatedBullet.tag = "PlayerProjectile";
-                        instantiatedBullet.GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * fireforce, ForceMode.Impulse);
-                        Destroy(instantiatedBullet, 5);
-                        bullets--;
-                        bulletsText.text = String.Format("{0}", bullets);
-                    }
+        if (Input.GetMouseButtonDown(2))
+        {
+            playerCam.DoFov(40);
+        }
+
+        if (Input.GetMouseButtonUp(2))
+        {
+            playerCam.DoFov(60);
+        }
+        
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            automaticShootTimer = automaticShootTime;
+            if(bullets > 0)
+                gunAnimator.SetTrigger("Shoot");
+        }
+        if (Input.GetButtonUp("Fire1"))
+        {
+            gunAnimator.SetTrigger("Empty");
+        }
+            
+        if (Input.GetButton("Fire1")){
+            if(bullets <= 0){
+                gunAnimator.SetTrigger("Empty");
+            }
+            automaticShootTimer -= Time.deltaTime;
+            if (automaticShootTimer <= 0)
+            {
+                if(bullets <= 0){
+                    AudioManager.Instance.PlaySound(emptuGunShotSound);
+                    automaticShootTimer = automaticShootTime;
+                }
+                else
+                {
+                    Shoot();
+                    automaticShootTimer = automaticShootTime;
+                }
+            }
+            //if(bullets <= 0){
+            //    AudioManager.Instance.PlaySound(emptuGunShotSound);
+            //}
+            //else{
+            //    gunAnimator.SetTrigger("Shoot");
+            //    AudioManager.Instance.PlaySound(gunShotSound, false, 1f);
+            //    GameObject instantiatedBullet =
+            //        Instantiate(projectile, Camera.main.transform.position + Camera.main.transform.forward, Camera.main.transform.rotation);
+            //    instantiatedBullet.tag = "PlayerProjectile";
+            //    instantiatedBullet.GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * fireforce, ForceMode.Impulse);
+            //    Destroy(instantiatedBullet, 5);
+            //    bullets--;
+            //    bulletsText.text = String.Format("{0}", bullets);
+            //}
                 }
 
 
