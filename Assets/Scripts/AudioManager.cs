@@ -7,7 +7,7 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
     public GameObject ambientSoundsHolder;
-    private List<AudioSource> audioSources = new List<AudioSource>();
+    public List<AudioSource> audioSources = new List<AudioSource>();
  
     public static AudioManager Instance
     {
@@ -47,7 +47,7 @@ public class AudioManager : MonoBehaviour
         var audio = audioSources[audioSources.Count - 1];
         audio.volume = volume;
         audio.clip = clipToPlay;
-        audio.pitch = 0.4f;
+        audio.pitch = 0.1f;
         audio.Play();
         Destroy(audio, clipToPlay.length);
     }
@@ -76,6 +76,10 @@ public class AudioManager : MonoBehaviour
 
     public void StopAmbientSound(int index)
     {
+        if (ambientSoundsHolder == null)
+        {
+            return;
+        }
         StartCoroutine(FadeOutSound(ambientSoundsHolder.GetComponents<AudioSource>()[index], 1));
     }
     

@@ -59,5 +59,7 @@ public class Collectable : MonoBehaviour
     {
         jetpackManager.fuel = jetpackManager.fullFuel;
         jetpackManager.fuelText.text = $"{jetpackManager.fuel.ToString("F1")} / {jetpackManager.fullFuel.ToString("F1")}";
+        Dashing dashing = GameObject.FindWithTag("Player").GetComponent<Dashing>();
+        dashing.dashesCount = 1;
     }
 }

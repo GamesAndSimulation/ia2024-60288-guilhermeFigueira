@@ -228,7 +228,7 @@ namespace DigitalRuby.RainMaker
             {
                 Camera = Camera.main;
             }
-
+            
             audioSourceRainLight = new LoopingAudioSource(this, RainSoundLight, RainSoundAudioMixer);
             audioSourceRainMedium = new LoopingAudioSource(this, RainSoundMedium, RainSoundAudioMixer);
             audioSourceRainHeavy = new LoopingAudioSource(this, RainSoundHeavy, RainSoundAudioMixer);
