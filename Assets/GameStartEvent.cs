@@ -18,7 +18,7 @@ public class GameStartEvent : MonoBehaviour
     {
         lightTimer = lightBlinkTime;
         fadeImage.DOFade(0, 5f);
-        AudioManager.Instance.PlaySound(robotVoice, false, 3f);
+        AudioManager.Instance.PlaySound(robotVoice, false, 100f);
         Invoke(nameof(OpenGate), robotVoice.length + 1f);
     }
 
